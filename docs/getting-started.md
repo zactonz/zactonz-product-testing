@@ -28,15 +28,18 @@ cp -r zactonz-product-testing/skills/product-testing ~/.claude/skills/
 ```
 
 Or as a Claude Code plugin. A plugin resolves through a marketplace, so the
-marketplace is registered first and the plugin installed from it — `/plugin
-install` on its own will not find it:
+marketplace is registered first and the plugin installed from it — installing by
+name alone will not find it:
 
 ```bash
-/plugin marketplace add zactonz/zactonz-product-testing
-/plugin install zactonz-product-testing@zactonz-product-testing
+claude plugin marketplace add zactonz/zactonz-product-testing
+claude plugin install zactonz-product-testing@zactonz-product-testing
 ```
 
-Installed as a plugin, the skill is addressed as
+`claude plugin details zactonz-product-testing` confirms it afterwards; plugins can
+also be managed from inside a session with `/plugin`.
+
+A plugin's skills are addressed as `plugin:skill`, so this one is
 `zactonz-product-testing:product-testing`.
 
 Use `./.claude/skills/` instead of `~/.claude/skills/` to scope it to one project.

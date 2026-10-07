@@ -102,8 +102,8 @@ cp -r zactonz-product-testing/skills/product-testing ~/.claude/skills/
 Or as a Claude Code plugin, which needs the marketplace registered first:
 
 ```bash
-/plugin marketplace add zactonz/zactonz-product-testing
-/plugin install zactonz-product-testing@zactonz-product-testing
+claude plugin marketplace add zactonz/zactonz-product-testing
+claude plugin install zactonz-product-testing@zactonz-product-testing
 ```
 
 Use `./.claude/skills/` instead of `~/.claude/skills/` to scope it to one project.
