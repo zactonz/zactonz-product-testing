@@ -4,7 +4,6 @@
   "description": "Test a product across functionality, UI, load and security, leaving a runnable suite and an evidence-backed report.",
   "author": {
     "name": "Zactonz Technologies",
-    "email": "github_manager@zactonz.com",
     "url": "https://zactonz.com"
   },
   "homepage": "https://developers.zactonz.com/skills/product-testing/",
