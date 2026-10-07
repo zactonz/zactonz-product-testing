@@ -1,0 +1,179 @@
+test_F01_invoices_bola (test_ledger.Findings.test_F01_invoices_bola)
+Alice must NOT read Bob's invoice (README: 404 for anyone else's). ... FAIL
+test_F02_patch_me_rejects_is_admin (test_ledger.Findings.test_F02_patch_me_rejects_is_admin)
+PATCH /me must ignore non-name fields (README: no other field editable). ... FAIL
+test_F03_items_sort_not_injectable (test_ledger.Findings.test_F03_items_sort_not_injectable)
+sort must be allowlisted; an arbitrary SQL expression must be rejected. ... /opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 500: 'Internal Server Error'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+FAIL
+test_F03b_items_sort_blind_injection_inert (test_ledger.Findings.test_F03b_items_sort_blind_injection_inert)
+A subquery in sort must not change results (proves it is not executed). ... FAIL
+test_F04_preview_rejects_file_scheme (test_ledger.Findings.test_F04_preview_rejects_file_scheme) ... FAIL
+test_F04b_preview_rejects_loopback (test_ledger.Findings.test_F04b_preview_rejects_loopback) ... FAIL
+test_F05_search_escapes_html (test_ledger.Findings.test_F05_search_escapes_html) ... FAIL
+test_F06_errors_leak_no_trace (test_ledger.Findings.test_F06_errors_leak_no_trace) ... FAIL
+test_F07_jobs_quota_atomic (test_ledger.Findings.test_F07_jobs_quota_atomic) ... FAIL
+test_F08_db_endpoint_stable_under_concurrency (test_ledger.Findings.test_F08_db_endpoint_stable_under_concurrency) ... FAIL
+test_F09_items_limit_range_enforced (test_ledger.Findings.test_F09_items_limit_range_enforced) ... FAIL
+test_F10_profile_limit_is_characters (test_ledger.Findings.test_F10_profile_limit_is_characters) ... FAIL
+test_F11_malformed_json_is_4xx (test_ledger.Findings.test_F11_malformed_json_is_4xx) ... FAIL
+test_F12_auth_requires_bearer_scheme (test_ledger.Findings.test_F12_auth_requires_bearer_scheme) ... FAIL
+test_ok_health (test_ledger.Sanity.test_ok_health) ... ok
+test_ok_serial_quota (test_ledger.Sanity.test_ok_serial_quota) ... /opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 429: 'Too Many Requests'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+test_ok_unauth_invoice_401 (test_ledger.Sanity.test_ok_unauth_invoice_401) ... /opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/tempfile.py:484: ResourceWarning: Implicitly cleaning up <HTTPError 401: 'Unauthorized'>
+  _warnings.warn(self.warn_message, ResourceWarning)
+ok
+
+======================================================================
+FAIL: test_F01_invoices_bola (test_ledger.Findings.test_F01_invoices_bola)
+Alice must NOT read Bob's invoice (README: 404 for anyone else's).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 59, in test_F01_invoices_bola
+    self.assertIn(code, (403, 404), f"cross-account read allowed: {code} {body}")
+    ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 not found in (403, 404) : cross-account read allowed: 200 {"id": 102, "user_id": 2, "amount": 9900, "note": "bob CONFIDENTIAL salary invoice"}
+
+======================================================================
+FAIL: test_F02_patch_me_rejects_is_admin (test_ledger.Findings.test_F02_patch_me_rejects_is_admin)
+PATCH /me must ignore non-name fields (README: no other field editable).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 65, in test_F02_patch_me_rejects_is_admin
+    self.assertEqual(json.loads(body).get("is_admin"), 0,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     "is_admin is user-editable (privilege escalation)")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : is_admin is user-editable (privilege escalation)
+
+======================================================================
+FAIL: test_F03_items_sort_not_injectable (test_ledger.Findings.test_F03_items_sort_not_injectable)
+sort must be allowlisted; an arbitrary SQL expression must be rejected.
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 71, in test_F03_items_sort_not_injectable
+    self.assertNotEqual(code, 500, "sort is interpolated into SQL (injection)")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 500 == 500 : sort is interpolated into SQL (injection)
+
+======================================================================
+FAIL: test_F03b_items_sort_blind_injection_inert (test_ledger.Findings.test_F03b_items_sort_blind_injection_inert)
+A subquery in sort must not change results (proves it is not executed).
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 85, in test_F03b_items_sort_blind_injection_inert
+    self.assertEqual(o1, o2, "ORDER BY subquery executed: blind SQL injection")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: ['item10', 'item12', 'item14', 'item16'] != ['item2', 'item4', 'item6', 'item8']
+
+First differing element 0:
+'item10'
+'item2'
+
+- ['item10', 'item12', 'item14', 'item16']
+?       ^^        ^^        ^^        ^^
+
++ ['item2', 'item4', 'item6', 'item8']
+?       ^        ^        ^        ^
+ : ORDER BY subquery executed: blind SQL injection
+
+======================================================================
+FAIL: test_F04_preview_rejects_file_scheme (test_ledger.Findings.test_F04_preview_rejects_file_scheme)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 90, in test_F04_preview_rejects_file_scheme
+    self.assertNotEqual(code, 200, "file:// scheme fetched (local file read)")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 == 200 : file:// scheme fetched (local file read)
+
+======================================================================
+FAIL: test_F04b_preview_rejects_loopback (test_ledger.Findings.test_F04b_preview_rejects_loopback)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 95, in test_F04b_preview_rejects_loopback
+    self.assertNotEqual(code, 200, "loopback fetched (SSRF)")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 == 200 : loopback fetched (SSRF)
+
+======================================================================
+FAIL: test_F05_search_escapes_html (test_ledger.Findings.test_F05_search_escapes_html)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 99, in test_F05_search_escapes_html
+    self.assertNotIn("<script>", body, "q reflected unescaped (reflected XSS)")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: '<script>' unexpectedly found in '<!DOCTYPE html><html><body><h3>Results for <script></h3><p>0 found.</p></body></html>' : q reflected unescaped (reflected XSS)
+
+======================================================================
+FAIL: test_F06_errors_leak_no_trace (test_ledger.Findings.test_F06_errors_leak_no_trace)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 104, in test_F06_errors_leak_no_trace
+    self.assertNotIn("Traceback", body, "stack trace leaked in error body (DEBUG on)")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 'Traceback' unexpectedly found in '{"error": "server_error", "trace": "Traceback (most recent call last):\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 1333, in do_open\\n    h.request(req.get_method(), req.selector, req.data, headers,\\n    ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n              encode_chunked=req.has_header(\'Transfer-encoding\'))\\n              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py\\", line 1386, in request\\n    self._send_request(method, url, body, headers, encode_chunked)\\n    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py\\", line 1432, in _send_request\\n    self.endheaders(body, encode_chunked=encode_chunked)\\n    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py\\", line 1381, in endheaders\\n    self._send_output(message_body, encode_chunked=encode_chunked)\\n    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py\\", line 1141, in _send_output\\n    self.send(msg)\\n    ~~~~~~~~~^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py\\", line 1085, in send\\n    self.connect()\\n    ~~~~~~~~~~~~^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/http/client.py\\", line 1051, in connect\\n    self.sock = self._create_connection(\\n                ~~~~~~~~~~~~~~~~~~~~~~~^\\n        (self.host,self.port), self.timeout, self.source_address)\\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socket.py\\", line 850, in create_connection\\n    for res in getaddrinfo(host, port, 0, SOCK_STREAM):\\n               ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/socket.py\\", line 989, in getaddrinfo\\n    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):\\n               ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\nsocket.gaierror: [Errno 8] nodename nor servname provided, or not known\\n\\nDuring handling of the above exception, another exception occurred:\\n\\nTraceback (most recent call last):\\n  File \\"/path/to/workspace/fixture/app.py\\", line 99, in do_GET\\n    with urllib.request.urlopen(target, timeout=4) as r:\\n         ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 187, in urlopen\\n    return opener.open(url, data, timeout)\\n           ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 487, in open\\n    response = self._open(req, data)\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 504, in _open\\n    result = self._call_chain(self.handle_open, protocol, protocol +\\n                              \'_open\', req)\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 464, in _call_chain\\n    result = func(*args)\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 1362, in http_open\\n    return self.do_open(http.client.HTTPConnection, req)\\n           ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\\n  File \\"/opt/homebrew/Cellar/python@3.14/3.14.8/Frameworks/Python.framework/Versions/3.14/lib/python3.14/urllib/request.py\\", line 1336, in do_open\\n    raise URLError(err)\\nurllib.error.URLError: <urlopen error [Errno 8] nodename nor servname provided, or not known>\\n"}' : stack trace leaked in error body (DEBUG on)
+
+======================================================================
+FAIL: test_F07_jobs_quota_atomic (test_ledger.Findings.test_F07_jobs_quota_atomic)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 116, in test_F07_jobs_quota_atomic
+    self.assertLessEqual(queued, 3, f"{queued} jobs queued under concurrency (quota=3): race")
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 12 not less than or equal to 3 : 12 jobs queued under concurrency (quota=3): race
+
+======================================================================
+FAIL: test_F08_db_endpoint_stable_under_concurrency (test_ledger.Findings.test_F08_db_endpoint_stable_under_concurrency)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 124, in test_F08_db_endpoint_stable_under_concurrency
+    self.assertEqual(out.count(500), 0,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+                     f"{out.count(500)}/{n} reads 500ed (shared sqlite connection, LOCK unused)")
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 1 != 0 : 1/60 reads 500ed (shared sqlite connection, LOCK unused)
+
+======================================================================
+FAIL: test_F09_items_limit_range_enforced (test_ledger.Findings.test_F09_items_limit_range_enforced)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 129, in test_F09_items_limit_range_enforced
+    self.assertNotEqual(json.loads(b0).get("count"), 30,
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                        "limit=0 returns all rows (LIMIT clause dropped)")
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 30 == 30 : limit=0 returns all rows (LIMIT clause dropped)
+
+======================================================================
+FAIL: test_F10_profile_limit_is_characters (test_ledger.Findings.test_F10_profile_limit_is_characters)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 137, in test_F10_profile_limit_is_characters
+    self.assertEqual(len(stored), 9, "name truncated to bytes, not characters")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 5 != 9 : name truncated to bytes, not characters
+
+======================================================================
+FAIL: test_F11_malformed_json_is_4xx (test_ledger.Findings.test_F11_malformed_json_is_4xx)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 141, in test_F11_malformed_json_is_4xx
+    self.assertNotEqual(code, 500, "malformed JSON returns 500 instead of 400")
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 500 == 500 : malformed JSON returns 500 instead of 400
+
+======================================================================
+FAIL: test_F12_auth_requires_bearer_scheme (test_ledger.Findings.test_F12_auth_requires_bearer_scheme)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/path/to/workspace/eval/with_skill/test_ledger.py", line 145, in test_F12_auth_requires_bearer_scheme
+    self.assertEqual(code, 401, "token accepted without Bearer scheme (loose parsing)")
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: 200 != 401 : token accepted without Bearer scheme (loose parsing)
+
+----------------------------------------------------------------------
+Ran 17 tests in 0.330s
+
+FAILED (failures=14)

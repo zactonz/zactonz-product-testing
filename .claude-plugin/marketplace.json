@@ -1,0 +1,34 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "zactonz-product-testing",
+  "description": "Product testing for Claude Code by Zactonz Technologies — functionality, UI, load and security testing that leaves a runnable suite and an evidence-backed report.",
+  "owner": {
+    "name": "Zactonz Technologies",
+    "url": "https://zactonz.com"
+  },
+  "plugins": [
+    {
+      "name": "zactonz-product-testing",
+      "source": "./",
+      "description": "Test a product the way a QA engineer would: inventory every surface it exposes, then attack it across functionality, UI, load/stress and security, leaving behind a runnable test suite and a findings report in which every claim is backed by captured output.",
+      "author": {
+        "name": "Zactonz Technologies",
+        "url": "https://zactonz.com"
+      },
+      "homepage": "https://developers.zactonz.com/skills/product-testing/",
+      "license": "Apache-2.0",
+      "category": "productivity",
+      "keywords": [
+        "testing",
+        "qa",
+        "edge-cases",
+        "ui-testing",
+        "accessibility",
+        "load-testing",
+        "stress-testing",
+        "security-testing",
+        "regression"
+      ]
+    }
+  ]
+}

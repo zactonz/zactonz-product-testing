@@ -1,0 +1,25 @@
+{
+  "name": "zactonz-product-testing",
+  "version": "1.0.0",
+  "description": "Test a product across functionality, UI, load and security, leaving a runnable suite and an evidence-backed report.",
+  "author": {
+    "name": "Zactonz Technologies",
+    "email": "github_manager@zactonz.com",
+    "url": "https://zactonz.com"
+  },
+  "homepage": "https://developers.zactonz.com/skills/product-testing/",
+  "repository": "https://github.com/zactonz/zactonz-product-testing",
+  "license": "Apache-2.0",
+  "keywords": [
+    "testing",
+    "qa",
+    "test-plan",
+    "edge-cases",
+    "ui-testing",
+    "accessibility",
+    "load-testing",
+    "stress-testing",
+    "security-testing",
+    "regression"
+  ]
+}

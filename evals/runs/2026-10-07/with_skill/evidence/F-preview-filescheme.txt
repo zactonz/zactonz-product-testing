@@ -1,0 +1,8 @@
+=== file:// local file read proof (reads fixture README via preview) ===
+--- GET /preview?url=file://<fixture>/README.md (unauth) ---
+{"url": "file:///path/to/workspace/fixture/README.md", "status": null, "body": "# Ledger API\n\nA small invoicing service. Two users exist, authenticated by bearer token:\n`tok-alice` (user 1) and `tok-bob` (user 2).\n\n## Run\n\n    python3 app.py 8910\n\n## Endpoints\n\n| Method | Path | Auth | Promise |\n|---|---|---|---|\n| GET | `/health` | none | `{\"ok\":true}` |\n| GET | `/app` | none | the web UI |\n| GET | `/search?q=` | none | HTML results page |\n| GET | `/invoices/<id>` | token | "}
+HTTP 200
+--- loopback SSRF reproducibility (3 runs) ---
+run1 HTTP 200
+run2 HTTP 200
+run3 HTTP 200

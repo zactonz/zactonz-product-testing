@@ -1,0 +1,8 @@
+=== /jobs serial quota on alice (QUOTA=3) ===
+reset jobs_used=0 HTTP 200
+post 1: {"queued": true, "used": 1} <- HTTP 201
+post 2: {"queued": true, "used": 2} <- HTTP 201
+post 3: {"queued": true, "used": 3} <- HTTP 201
+post 4: {"error": "quota_exceeded", "used": 3} <- HTTP 429
+post 5: {"error": "quota_exceeded", "used": 3} <- HTTP 429
+(expect 201,201,201,429,429 if quota holds serially)

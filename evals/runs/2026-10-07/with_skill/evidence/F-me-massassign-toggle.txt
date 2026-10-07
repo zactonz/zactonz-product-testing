@@ -1,0 +1,5 @@
+=== Clean toggle: is_admin tracks attacker input (self-contained) ===
+sent is_admin=0  ->  response: {"id": 1, "name": "alice", "is_admin": 0}
+sent is_admin=1  ->  response: {"id": 1, "name": "alice", "is_admin": 1}
+sent is_admin=0  ->  response: {"id": 1, "name": "alice", "is_admin": 0}
+(final state restored to is_admin=0)

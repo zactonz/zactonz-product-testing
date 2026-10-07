@@ -1,0 +1,83 @@
+{
+  "target": "http://127.0.0.1:8910/items?limit=20",
+  "method": "GET",
+  "concurrency": 50,
+  "ramp_seconds": 0.0,
+  "rps_cap": null,
+  "think_seconds": 0.0,
+  "warmup_seconds": 0.0,
+  "wall_seconds": 6.068,
+  "measured_seconds": 6.068,
+  "requests": 9271,
+  "discarded_warmup": 0,
+  "successful": 9225,
+  "failed": 46,
+  "error_rate_pct": 0.496,
+  "throughput_rps": 1527.75,
+  "bytes_received": 8417402,
+  "status_counts": {
+    "200": 9225,
+    "500": 46
+  },
+  "error_counts": {
+    "unexpected_status_500": 46
+  },
+  "latency_ms_successful": {
+    "min": 0.3895830000146816,
+    "mean": 32.253086242818846,
+    "p50": 30.951749999985623,
+    "p75": 40.74566600002072,
+    "p90": 50.845083400054136,
+    "p95": 58.64462500012449,
+    "p99": 93.01901008000654,
+    "max": 236.7128750001939
+  },
+  "latency_ms_all": {
+    "min": 0.3895830000146816,
+    "mean": 32.362840866142314,
+    "p50": 30.98225000030652,
+    "p75": 40.87672900004691,
+    "p90": 51.01812500015512,
+    "p95": 58.85229150021587,
+    "p99": 94.99777079995468,
+    "max": 236.7128750001939
+  },
+  "timeline": [
+    {
+      "second": 0,
+      "requests": 1643,
+      "errors": 2,
+      "p95_ms": 55.92858299996806
+    },
+    {
+      "second": 1,
+      "requests": 1512,
+      "errors": 7,
+      "p95_ms": 68.36289179991579
+    },
+    {
+      "second": 2,
+      "requests": 1284,
+      "errors": 4,
+      "p95_ms": 72.59104790002766
+    },
+    {
+      "second": 3,
+      "requests": 1598,
+      "errors": 19,
+      "p95_ms": 55.19193810027895
+    },
+    {
+      "second": 4,
+      "requests": 1512,
+      "errors": 9,
+      "p95_ms": 56.91069550002794
+    },
+    {
+      "second": 5,
+      "requests": 1722,
+      "errors": 5,
+      "p95_ms": 50.92509140031323
+    }
+  ]
+}

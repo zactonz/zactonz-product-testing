@@ -1,0 +1,18 @@
+=== methods / routes / malformed input ===
+--- PUT /me (no do_PUT handler) ---
+HTTP 501
+--- DELETE /invoices/101 ---
+HTTP 501
+--- OPTIONS /items ---
+HTTP 501
+--- HEAD /health ---
+HTTP 501
+--- unknown GET path ---
+{"error": "no_route"}
+HTTP 404
+--- malformed JSON to POST /profile (expect 400, not 500) ---
+{"error": "server_error", "trace": "Traceback (most recent call last):\n  File \"/path/to/workspace
+--- Server banner on /health ---
+Server: LedgerAPI/2.4.1 Python/3 Python/3.14.8
+--- security headers on /app (expect some; checking absence) ---
+(none of CSP/XFO/nosniff/HSTS present)

@@ -1,0 +1,50 @@
+{
+  "target": "http://127.0.0.1:8910/health",
+  "method": "GET",
+  "concurrency": 1,
+  "ramp_seconds": 0.0,
+  "rps_cap": null,
+  "think_seconds": 0.0,
+  "warmup_seconds": 0.0,
+  "wall_seconds": 0.51,
+  "measured_seconds": 0.51,
+  "requests": 50,
+  "discarded_warmup": 0,
+  "successful": 50,
+  "failed": 0,
+  "error_rate_pct": 0.0,
+  "throughput_rps": 97.97,
+  "bytes_received": 600,
+  "status_counts": {
+    "200": 50
+  },
+  "error_counts": {},
+  "latency_ms_successful": {
+    "min": 0.16654199998811237,
+    "mean": 0.3589966999606986,
+    "p50": 0.18258300019624585,
+    "p75": 0.19624000015028287,
+    "p90": 0.208812799610314,
+    "p95": 0.2246372000172414,
+    "p99": 4.611408920036394,
+    "max": 8.783167000274261
+  },
+  "latency_ms_all": {
+    "min": 0.16654199998811237,
+    "mean": 0.3589966999606986,
+    "p50": 0.18258300019624585,
+    "p75": 0.19624000015028287,
+    "p90": 0.208812799610314,
+    "p95": 0.2246372000172414,
+    "p99": 4.611408920036394,
+    "max": 8.783167000274261
+  },
+  "timeline": [
+    {
+      "second": 0,
+      "requests": 50,
+      "errors": 0,
+      "p95_ms": 0.2246372000172414
+    }
+  ]
+}

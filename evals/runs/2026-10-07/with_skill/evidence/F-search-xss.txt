@@ -1,0 +1,4 @@
+=== F: reflected XSS in /search (q reflected unescaped) ===
+--- marker <zxss> and a script tag reflected into HTML ---
+<!DOCTYPE html><html><body><h3>Results for <zxss><script>alert(1)</script></h3><p>0 found.</p></body></html>
+HTTP 200

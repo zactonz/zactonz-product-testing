@@ -1,0 +1,9 @@
+=== F: /items limit not validated (README: 1-100, default 20) ===
+limit=0 -> HTTP 200  count=30
+limit=-1 -> HTTP 200  count=30
+limit=1 -> HTTP 200  count=1
+limit=100 -> HTTP 200  count=30
+limit=101 -> HTTP 200  count=30
+limit=1000 -> HTTP 200  count=30
+limit=abc -> HTTP 500  non-json/500
+(user1 owns 30 items total; default/limit=20 should cap at 20; 0 and negative drop the LIMIT clause and return all 30)

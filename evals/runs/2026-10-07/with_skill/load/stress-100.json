@@ -1,0 +1,80 @@
+{
+  "target": "http://127.0.0.1:8910/health",
+  "method": "GET",
+  "concurrency": 100,
+  "ramp_seconds": 0.0,
+  "rps_cap": null,
+  "think_seconds": 0.0,
+  "warmup_seconds": 0.0,
+  "wall_seconds": 6.299,
+  "measured_seconds": 6.299,
+  "requests": 70250,
+  "discarded_warmup": 0,
+  "successful": 70250,
+  "failed": 0,
+  "error_rate_pct": 0.0,
+  "throughput_rps": 11152.1,
+  "bytes_received": 843000,
+  "status_counts": {
+    "200": 70250
+  },
+  "error_counts": {},
+  "latency_ms_successful": {
+    "min": 0.09950000003300374,
+    "mean": 8.452571884811865,
+    "p50": 7.137916499914354,
+    "p75": 10.974572750001244,
+    "p90": 15.619082699822684,
+    "p95": 18.900650149998913,
+    "p99": 27.607426580056984,
+    "max": 109.54070799971305
+  },
+  "latency_ms_all": {
+    "min": 0.09950000003300374,
+    "mean": 8.452571884811865,
+    "p50": 7.137916499914354,
+    "p75": 10.974572750001244,
+    "p90": 15.619082699822684,
+    "p95": 18.900650149998913,
+    "p99": 27.607426580056984,
+    "max": 109.54070799971305
+  },
+  "timeline": [
+    {
+      "second": 0,
+      "requests": 12474,
+      "errors": 0,
+      "p95_ms": 17.154016549943655
+    },
+    {
+      "second": 1,
+      "requests": 11512,
+      "errors": 0,
+      "p95_ms": 20.03658330013422
+    },
+    {
+      "second": 2,
+      "requests": 12085,
+      "errors": 0,
+      "p95_ms": 18.215566399794625
+    },
+    {
+      "second": 3,
+      "requests": 10691,
+      "errors": 0,
+      "p95_ms": 22.025937500075088
+    },
+    {
+      "second": 4,
+      "requests": 11424,
+      "errors": 0,
+      "p95_ms": 18.2827455499819
+    },
+    {
+      "second": 5,
+      "requests": 12064,
+      "errors": 0,
+      "p95_ms": 18.4966213498683
+    }
+  ]
+}

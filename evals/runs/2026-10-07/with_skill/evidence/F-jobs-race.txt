@@ -1,0 +1,23 @@
+=== /jobs quota race (run 1) ===
+fired 15 concurrent POST /jobs against QUOTA=3
+  201 (queued)      : 12
+  429 (quota)       : 0
+  500 (error)       : 3
+  distinct 'used' values returned among 201s: [1, 2]
+  VERDICT: RACE — more than 3 queued
+=== run 2 ===
+fired 15 concurrent POST /jobs against QUOTA=3
+  201 (queued)      : 12
+  429 (quota)       : 0
+  500 (error)       : 3
+  distinct 'used' values returned among 201s: [1]
+  VERDICT: RACE — more than 3 queued
+=== run 3 ===
+fired 15 concurrent POST /jobs against QUOTA=3
+  201 (queued)      : 14
+  429 (quota)       : 0
+  500 (error)       : 1
+  distinct 'used' values returned among 201s: [1]
+  VERDICT: RACE — more than 3 queued
+final reset HTTP 200
+Concurrent 500 body (first line of trace): sqlite3.InterfaceError: bad parameter or other API misuse

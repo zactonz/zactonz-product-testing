@@ -1,0 +1,10 @@
+=== F: /profile truncates to 10 BYTES not 10 characters (README: max 10 characters) ===
+--- 10 ASCII chars 'abcdefghij' (10 chars, 10 bytes -> should store all 10) ---
+{"name": "abcdefghij", "bytes": 10}
+--- 9 Greek chars 'ααααααααα' (9 chars but 18 bytes) ---
+{"name": "\u03b1\u03b1\u03b1\u03b1\u03b1", "bytes": 18}
+--- 4 emoji '🙂🙂🙂🙂' (4 chars, 16 bytes) ---
+{"name": "\ud83d\ude42\ud83d\ude42", "bytes": 16}
+--- restore bob name ---
+restore HTTP 200
+(result 'name' shorter than input in chars, and a split multibyte sequence is dropped by decode(...,'ignore') = silent corruption)

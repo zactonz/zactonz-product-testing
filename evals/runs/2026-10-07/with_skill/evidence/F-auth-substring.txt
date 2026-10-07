@@ -1,0 +1,13 @@
+=== F: who() uses substring replace, not Bearer-prefix check ===
+--- no scheme at all: Authorization: tok-alice (README: bearer token) ---
+{"id": 101, "user_id": 1, "amount": 500, "note": "alice invoice"}
+HTTP 200
+--- doubled scheme: Authorization: Bearer Bearer tok-alice ---
+{"id": 101, "user_id": 1, "amount": 500, "note": "alice invoice"}
+HTTP 200
+--- scheme in weird place: Authorization: tok-aliceBearer  (trailing) ---
+{"id": 101, "user_id": 1, "amount": 500, "note": "alice invoice"}
+HTTP 200
+--- wrong token (expect 401) ---
+{"error": "unauthenticated"}
+HTTP 401
